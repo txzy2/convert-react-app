@@ -1,0 +1,42 @@
+@import './fonts.css';
+@import './vars.scss';
+@import './ui/loader.scss';
+@import './ui/switch.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: 'Rubik', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background-color: $main-bg;
+  color: $main-text;
+
+  font-weight: 400;
+}
+
+a,
+button {
+  cursor: pointer;
+  text-decoration: none;
+  font-family: 'Rubik', sans-serif;
+}
+
+body.dark {
+  background-color: $main-bg-dark;
+  color: $main-text-dark;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  color: red;
+  font-size: 14px;
+}

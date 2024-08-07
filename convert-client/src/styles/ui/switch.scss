@@ -1,0 +1,50 @@
+.switch,
+.switch-dark {
+  cursor: pointer;
+  width: 50px;
+  height: 26px;
+
+  font-size: 14px;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  padding: 0 2px;
+
+  background-color: #4d4d4d;
+  border-radius: 50px;
+
+  transition: 0.3s ease-in-out;
+
+  &:hover {
+    scale: 1.1;
+  }
+}
+
+.switch-dark {
+  background-color: #e0e0e0;
+}
+
+.switch[data-isOn='true'] {
+  justify-content: flex-end;
+}
+
+.switch--radio {
+  cursor: pointer;
+  width: 50px;
+  height: 26px;
+
+  font-size: 18px;
+
+  background: transparent;
+  outline: none;
+  border: none;
+
+  transition: 0.3s ease-in-out;
+
+  &:hover {
+    scale: 1.1;
+  }
+
+}
