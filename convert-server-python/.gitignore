@@ -1,0 +1,5 @@
+uploads/
+converted/
+/__pycache__/
+.venv/
+server/

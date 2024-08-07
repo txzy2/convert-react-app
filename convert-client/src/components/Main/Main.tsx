@@ -1,7 +1,7 @@
-import {ChangeEvent, useState, useCallback, useMemo} from 'react';
+import { ChangeEvent, useState, useCallback, useMemo } from 'react';
 import Hover from '../../shared/animations/Hover';
 import './main.scss';
-import {PreLoader} from '../../shared/ui/Loader';
+import { PreLoader } from '../../shared/ui/Loader';
 import {
   ArrowRight,
   ChevronsRight,
@@ -11,6 +11,7 @@ import {
   Upload,
 } from 'lucide-react';
 import FadeIn from '../../shared/animations/FadeIn';
+import axios from 'axios';
 
 const Main: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -18,6 +19,7 @@ const Main: React.FC = () => {
   const [error, setError] = useState<boolean>(false);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [openForm, setOpenForm] = useState<boolean>(true);
+  const [fileName, setFileName] = useState<string>('');
 
   const isDisabled = useMemo(() => !file, [file]);
 
@@ -47,15 +49,21 @@ const Main: React.FC = () => {
       setOpenForm(false);
 
       try {
-        const response = await fetch('http://localhost:4200/upload', {
-          method: 'POST',
-          body: formData,
-        });
+        const response = await axios.post(
+          'http://127.0.0.1:8000/upload',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+            responseType: 'blob',
+          },
+        );
 
-        if (response.ok) {
-          const blob = await response.blob();
-          const url = URL.createObjectURL(blob);
+        if (response.status === 200) {
+          const url = URL.createObjectURL(response.data);
           setFileUrl(url);
+          setFileName(`${(file.name).replace('.docx', '')}.pdf`);
         } else {
           setError(true);
         }
@@ -117,7 +125,7 @@ const Main: React.FC = () => {
 
       {loading ? (
         <PreLoader
-          title={{text: 'Converting...', size: 's'}}
+          title={{ text: 'Converting...', size: 's' }}
           size={25}
           ceneter={false}
           sub={false}
@@ -131,7 +139,7 @@ const Main: React.FC = () => {
                 <ArrowRight className='arrow__icon' size={20} />
               </p>
               <Hover scale={1.05}>
-                <a href={fileUrl} download>
+                <a href={fileUrl} download={fileName}>
                   <Download className='download__icon' /> Download
                 </a>
               </Hover>
